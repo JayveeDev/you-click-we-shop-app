@@ -1,0 +1,64 @@
+<!-- Default form login -->
+<form class="text-center p-5 w-responsive h-auto mx-auto" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+  <p class="h4 mb-4">Sign in</p>
+
+  <!-- Email -->
+  <input type="email" formControlName="EmailAddress" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+  <!-- Password -->
+  <input type="password" formControlName="Password" id="defaultLoginFormPassword" class="form-control mb-3" placeholder="Password">
+  <small class="form-text text-muted float-left mb-1">
+    Login as:
+  </small>
+  <select class="browser-default custom-select form-control mb-4" formControlName="Role">
+    <option value="Customer" selected>Customer</option>
+    <option value="Delivery">Delivery</option>
+    <option value="Administrator">Administrator</option>
+  </select>
+  
+
+
+  <div class="d-flex justify-content-around">
+    <div>
+      <!-- Remember me -->
+      <mdb-checkbox [default]="true">Remember me</mdb-checkbox>
+    </div>
+    <div>
+      <!-- Forgot password -->
+      <a href="">Forgot password?</a>
+    </div>
+  </div>
+
+  <!-- Sign in button -->
+  <button mdbBtn color="red" block="true" class="my-4" type="submit">Sign in</button>
+
+  <!-- Register -->
+<p>Don't have an account yet?
+    <a class="waves-light" [routerLink]='["/signup"]' >Register</a>
+  </p>
+  
+
+
+  <!-- Social login
+  <p>or sign in with:</p>
+
+  <a type="button" class="light-blue-text mx-2">
+
+    <mdb-icon icon="facebook"></mdb-icon>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+
+    <mdb-icon icon="twitter"></mdb-icon>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+
+    <mdb-icon icon="linkedin"></mdb-icon>
+  </a>
+  <a type="button" class="light-blue-text mx-2">
+
+    <mdb-icon icon="github"></mdb-icon>
+  </a>
+ -->
+</form>
+<!-- Default form login -->

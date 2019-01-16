@@ -1,0 +1,72 @@
+<!--
+<div mdbModal #signupFrame="mdbModal" (close)="closeModal()" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+-->
+
+<!-- Default form register -->
+<form class="text-center p-5 w-responsive h-auto mx-auto" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+  <p class="h4 mb-4">Sign up</p>
+
+  <div class="form-row mb-4">
+    <div class="col">
+      <!-- First name -->
+      <input formControlName="FirstName" type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
+    </div>
+    <div class="col">
+      <!-- Last name -->
+      <input type="text" formControlName="LastName" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+    </div>
+  </div>
+
+  <!-- E-mail -->
+  <input type="email" formControlName="EmailAddress" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
+                
+
+  <!-- Password -->
+  <input type="password" formControlName="Password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+  <small class="form-text text-muted mb-4">
+    At least 8 characters, 1 uppecase and 1 digit combination
+  </small>
+
+  <!-- Phone number -->
+  <input type="text" formControlName="PhoneNo" class="form-control" placeholder="Phone number" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+  <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-3">
+    
+  </small>
+
+  <!-- Account Type -->
+  <small class="form-text text-muted float-left mb-1">
+    Account Type
+  </small>
+  <select class="browser-default custom-select form-control mb-4" formControlName="Role">
+    <option value="Customer" selected>Customer</option>
+    <option value="Delivery">Delivery</option>
+  </select>
+
+
+  <!-- Sign up button -->
+  <button mdbBtn color="red" block="true" class="my-4" type="submit">Sign up</button>
+
+  
+
+  <hr>
+
+  <!-- Terms of service -->
+  <p>By clicking
+    <em>Sign up</em> you agree to our
+    <a href="" target="_blank">terms of service</a> and
+    <a href="" target="_blank">terms of service</a>. </p>
+
+</form>
+<!-- Default form register -->
+
+
+<!--
+    </div>
+  </div>
+</div>
+-->
