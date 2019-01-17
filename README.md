@@ -1,6 +1,10 @@
-# Pitchedmarketing
+# You Click We Shop
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.2.
+Clone this app using git clone or download it via zip file.
+
+## Installation
+
+Run 'npm install' to install app dependencies
 
 ## Development server
 
