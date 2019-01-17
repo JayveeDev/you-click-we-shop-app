@@ -1,6 +1,6 @@
 <app-navigation></app-navigation>
   <!-- Default form register -->
-<form class="border border-light text-center my-3 p-5 w-responsive mx-auto" [formGroup]="ManageAccountForm" (ngSubmit)="onSubmit()">
+<form class="border border-light text-center mb-3 p-5 w-responsive mx-auto" [formGroup]="ManageAccountForm" (ngSubmit)="onSubmit()">
 
   <p class="h4 mb-4">Manage Account</p>
 
@@ -55,11 +55,11 @@
   </small>
 
   <small class="form-text text-muted float-left">
-    Mobile #
+    Mobile No
   </small>
   <!-- Phone number -->
   <input type="text" formControlName="PhoneNo" class="form-control" placeholder="Mobile No" aria-describedby="defaultRegisterFormPhoneHelpBlock">
-  <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-3">
+  <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-5">
     
   </small>
 

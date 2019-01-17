@@ -14,44 +14,65 @@
   <div class="form-row mb-4">
     <div class="col">
       <!-- First name -->
-      <input formControlName="FirstName" type="text" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
+      <input mdbValidate type="text" class="form-control" formControlName="FirstName" placeholder="First Name">
+      <mdb-error *ngIf="FirstName.invalid && (FirstName.dirty || FirstName.touched)">Invalid name</mdb-error>
     </div>
+
     <div class="col">
       <!-- Last name -->
-      <input type="text" formControlName="LastName" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+      <input mdbValidate type="text" formControlName="LastName" class="form-control" placeholder="Last name">
+      <mdb-error *ngIf="LastName.invalid && (LastName.dirty || LastName.touched)">Invalid name</mdb-error>
     </div>
   </div>
 
   <!-- E-mail -->
-  <input type="email" formControlName="EmailAddress" id="defaultRegisterFormEmail" class="form-control mb-4" placeholder="E-mail">
-                
+  <div class="form-row mb-4">
+    <div class="col">
+      <input mdbValidate type="email" formControlName="EmailAddress" class="form-control" placeholder="E-mail">
+      <mdb-error *ngIf="EmailAddress.invalid && (EmailAddress.dirty || EmailAddress.touched)">Invalid email</mdb-error>
+    </div>
+  </div>
+
+
+
 
   <!-- Password -->
-  <input type="password" formControlName="Password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock">
-  <small class="form-text text-muted mb-4">
-    At least 8 characters, 1 uppecase and 1 digit combination
-  </small>
+  <div class="form-row mb-5">
+    <div class="col">
+      <input mdbValidate type="password" formControlName="Password" class="form-control" placeholder="Password">
+      <mdb-error *ngIf="Password.invalid && (Password.dirty || Password.touched)">Password should be 8 characters with
+        a combination of 1 uppercase and 1 digit</mdb-error>
+    </div>
+  </div>
+
 
   <!-- Phone number -->
-  <input type="text" formControlName="PhoneNo" class="form-control" placeholder="Phone number" aria-describedby="defaultRegisterFormPhoneHelpBlock">
-  <small id="defaultRegisterFormPhoneHelpBlock" class="form-text text-muted mb-3">
-    
-  </small>
+  <div class="form-row mb-3">
+    <div class="col">
+      <input mdbValidate type="text" formControlName="PhoneNo" class="form-control" placeholder="Phone number">
+      <mdb-error *ngIf="PhoneNo.invalid && (PhoneNo.dirty || PhoneNo.touched)">Invalid phone number</mdb-error>
+    </div>
+  </div>
 
   <!-- Account Type -->
-  <small class="form-text text-muted float-left mb-1">
-    Account Type
-  </small>
-  <select class="browser-default custom-select form-control mb-4" formControlName="Role">
-    <option value="Customer" selected>Customer</option>
-    <option value="Delivery">Delivery</option>
-  </select>
+  <div class="form-row mb-5">
+    <div class="col">
+      <small class="form-text text-muted float-left mb-1">
+        Account Type
+      </small>
+      <select mdbValidate class="browser-default custom-select form-control" formControlName="Role">
+        <option value="Customer" selected>Customer</option>
+        <option value="Delivery">Delivery</option>
+      </select>
+      <mdb-error class="mt-4" *ngIf="Role.invalid && (Role.dirty || Role.touched)">Required field</mdb-error>
+    </div>
+  </div>
 
 
   <!-- Sign up button -->
-  <button mdbBtn color="red" block="true" class="my-4" type="submit">Sign up</button>
+  <button mdbBtn color="red" block="true" class="mt-5" type="submit">Sign up</button>
 
-  
+
 
   <hr>
 

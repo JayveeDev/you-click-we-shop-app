@@ -49,7 +49,8 @@ export class LoginComponent implements OnInit {
           EmailAddress: this.loginForm.controls["EmailAddress"].value,
           Password: this.loginForm.controls["Password"].value
         });
-        this.login(this.loginModel);
+        this.login(this.loginModel)
+        
         //window.location.reload();
       }
     }

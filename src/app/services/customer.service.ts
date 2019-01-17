@@ -2,7 +2,7 @@ import { Injectable, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, from } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {enableProdMode} from '@angular/core';
+import { enableProdMode } from '@angular/core';
 
 enableProdMode();
 
@@ -25,13 +25,13 @@ export class CustomerService {
     return this.http.get<CustomerModel[]>(this.listUrl);
   }
   getRecord(id: number): Observable<CustomerModel> {
-    return this.http.get<CustomerModel>(this.getUrl+id);
+    return this.http.get<CustomerModel>(this.getUrl + id);
   }
   createRecord(model: CustomerModel): Observable<CustomerModel> {
     return this.http.post<CustomerModel>(this.postUrl, model);
   }
-  deleteRecord(recordId: number): Observable<CustomerModel>{
-    return this.http.delete<CustomerModel>(this.deleteUrl+recordId);
+  deleteRecord(recordId: number): Observable<CustomerModel> {
+    return this.http.delete<CustomerModel>(this.deleteUrl + recordId);
   }
   editRecord(model: CustomerModel): Observable<CustomerModel> {
     return this.http.put<CustomerModel>(this.editUrl, model);

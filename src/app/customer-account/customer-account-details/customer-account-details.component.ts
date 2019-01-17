@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
+import { BillingAddressService } from '../../services/billing-address.service'
 import { CustomerModel } from '../../models/customer.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -23,6 +24,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: CustomerService,
+    private billingService: BillingAddressService,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -46,7 +48,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$') //this is for the letters (both uppercase and lowercase) and numbers validation
       ])],
       PhoneNo: ['', Validators.required],
-      AddressLine1: ['',Validators.required],
+      AddressLine1: ['', Validators.required],
       AddressLine2: [''],
       City: ['', Validators.required],
       Province: ['', Validators.required],
@@ -69,9 +71,23 @@ export class CustomerAccountDetailsComponent implements OnInit {
 
   _handleReaderLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
-    this.base64textString = this.base64Prefix+btoa(binaryString);
+    this.base64textString = this.base64Prefix + btoa(binaryString);
     this.avatar = this.base64textString;
     //console.log(this.base64textString);
+  }
+
+  getBillingAddress() {
+    this.billingService.getRecord(this.id).subscribe(
+      data => {
+        if (data != null) {
+          this.ManageAccountForm.controls["AddressLine1"].setValue(data.AddressLine1);
+          this.ManageAccountForm.controls["AddressLine2"].setValue(data.AddressLine2);
+          this.ManageAccountForm.controls["City"].setValue(data.City);
+          this.ManageAccountForm.controls["Province"].setValue(data.Province);
+          this.ManageAccountForm.controls["Zip"].setValue(data.Zip);
+        }
+      }
+    );
   }
 
   getRecord() {
@@ -83,6 +99,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
         this.ManageAccountForm.controls["EmailAddress"].setValue(data.EmailAddress);
         this.ManageAccountForm.controls["Password"].setValue(data.Password);
         this.ManageAccountForm.controls["PhoneNo"].setValue(data.PhoneNo);
+        this.getBillingAddress();
       },
       err => {
         console.log(err);
@@ -112,7 +129,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
 
       this.service.editRecord(this.model).subscribe(
         data => {
-          this.route.snapshot.queryParams['returnUrl'];
+
         },
         err => {
           console.log(err);

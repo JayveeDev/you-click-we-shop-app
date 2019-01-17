@@ -6,8 +6,6 @@ import { DeliveryModel } from '../models/delivery.model';
 import { CustomerLoginModel } from '../models/login.model';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { ModalModule, WavesModule, InputsModule } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-signup',
@@ -15,27 +13,31 @@ import { ModalModule, WavesModule, InputsModule } from 'angular-bootstrap-md';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-  @ViewChild ('signupFrame') public signupModal: any;
   signupForm: FormGroup;
   model: CustomerModel;
   deliveryModel: DeliveryModel;
   loginModel: CustomerLoginModel;
+  submitted : boolean;
 
   constructor(
     private service: CustomerService,
     private formBuilder: FormBuilder,
     private loginservice: LoginService,
-    private router: Router,
-    private toastr: ToastrService,
-    private modal : ModalModule
+    private router: Router
   ) { }
 
   ngOnInit() {
 
     //this.getList();
     this.signupForm = this.formBuilder.group({
-      FirstName: ['', Validators.required],
-      LastName: ['', Validators.required],
+      FirstName: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[A-Za-z]+$')
+      ])],
+      LastName: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[A-Za-z]+$')
+      ])],
       EmailAddress: ['', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -43,13 +45,24 @@ export class SignupComponent implements OnInit {
       Password: ['', Validators.compose([
         Validators.minLength(8),
         Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$') //this is for the letters (both uppercase and lowercase) and numbers validation
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
       ])],
-      PhoneNo: ['', Validators.required],
+      PhoneNo: ['', Validators.compose([
+        Validators.maxLength(13),
+        Validators.required,
+        Validators.pattern('^[0-9+]+$')
+      ])],
       Role: ['', Validators.required],
     });
   }
 
+  //Validators
+  get FirstName() { return this.signupForm.get('FirstName'); }
+  get LastName() { return this.signupForm.get('LastName'); }
+  get EmailAddress() { return this.signupForm.get('EmailAddress'); }
+  get Password() { return this.signupForm.get('Password'); }
+  get PhoneNo() { return this.signupForm.get('PhoneNo'); }
+  get Role() { return this.signupForm.get('Role'); }
 
   public deleteRecord() {
     this.service.deleteRecord(2).subscribe(
@@ -79,10 +92,10 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
 
     if (this.signupForm.invalid) {
-      this.showError();
-      console.log("invalid");
+      console.log("Invalid");
       return;
     } else {
       //account creation and login for customer account
@@ -105,9 +118,7 @@ export class SignupComponent implements OnInit {
 
         this.service.createRecord(this.model).subscribe(
           data => {
-            this.toastr.success('Your account has been successfully registered!', 'Success!');
             console.log(this.model);
-            //this.login(this.loginModel);
             this.router.navigate(['/login']);
           },
           err => {
@@ -138,84 +149,4 @@ export class SignupComponent implements OnInit {
   async login(loginrequest: CustomerLoginModel) {
     this.loginservice.Login(loginrequest);
   }
-
-
-
-
-  //toastr after validation
-  showError() {
-    //Firstname validation message
-    for (let validation of this.AccountValidationMessage.firstname) {
-      if (this.signupForm.get('FirstName').hasError(validation.type) && (this.signupForm.get('FirstName').dirty || this.signupForm.get('FirstName').touched)) {
-        var msg = validation.message;
-        this.toastr.warning(msg, 'Please try again!');
-      }
-    }
-    //Lastname validation message
-    for (let validation of this.AccountValidationMessage.lastname) {
-      if (this.signupForm.get('LastName').hasError(validation.type) && (this.signupForm.get('LastName').dirty || this.signupForm.get('LastName').touched)) {
-        var msg = validation.message;
-        this.toastr.warning(msg, 'Please try again!');
-      }
-    }
-    //Email validation message
-    for (let validation of this.AccountValidationMessage.email) {
-      if (this.signupForm.get('EmailAddress').hasError(validation.type) && (this.signupForm.get('EmailAddress').dirty || this.signupForm.get('EmailAddress').touched)) {
-        var msg = validation.message;
-        this.toastr.warning(msg, 'Please try again!');
-      }
-    }
-    //Password validation message
-    for (let validation of this.AccountValidationMessage.password) {
-      if (this.signupForm.get('Password').hasError(validation.type) && (this.signupForm.get('Password').dirty || this.signupForm.get('Password').touched)) {
-        var msg = validation.message;
-        this.toastr.warning(msg, 'Please try again!');
-      }
-    }
-    //Phone validation message
-    for (let validation of this.AccountValidationMessage.phone) {
-      if (this.signupForm.get('PhoneNo').hasError(validation.type) && (this.signupForm.get('PhoneNo').dirty || this.signupForm.get('PhoneNo').touched)) {
-        var msg = validation.message;
-        this.toastr.warning(msg, 'Please try again!');
-      }
-    }
-    //Account Type validation message
-    for (let validation of this.AccountValidationMessage.role) {
-      if (this.signupForm.get('Role').hasError(validation.type) && (this.signupForm.get('Role').dirty || this.signupForm.get('Role').touched)) {
-        var msg = validation.message;
-        this.toastr.warning(msg, 'Please try again!');
-      }
-    }
-  }
-
-
-
-  
-
-
-  //Validation Message
-  AccountValidationMessage = {
-    'firstname': [
-      { type: 'required', message: 'Please enter your first name' }
-    ],
-    'lastname': [
-      { type: 'required', message: 'Please enter your last name' }
-    ],
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'phone': [
-      { type: 'required', message: 'Phone number is required' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 8 characters long' },
-      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number' }
-    ],
-    'role': [
-      { type: 'required', message: 'Account type is required' },
-    ]
-  }
-
 }
