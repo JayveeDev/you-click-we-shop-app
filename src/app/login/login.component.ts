@@ -33,16 +33,8 @@ export class LoginComponent implements OnInit {
      ])],
       Role: ['', Validators.required]
     });
-    this.checkExistingUser();
   }
 
-  checkExistingUser(){
-    if(localStorage.getItem('currentUser') != null || localStorage.getItem('currentUser') != null){
-      this.router.navigate(['/home']);
-    }else{
-      this.router.navigate(['/login'])
-    }
-  }
 
   onSubmit() {
     //Login for customer
@@ -58,7 +50,7 @@ export class LoginComponent implements OnInit {
           Password: this.loginForm.controls["Password"].value
         });
         this.login(this.loginModel);
-        window.location.reload();
+        //window.location.reload();
       }
     }
     //Login for Delivery

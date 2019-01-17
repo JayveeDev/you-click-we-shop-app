@@ -45,7 +45,12 @@ export class CustomerAccountDetailsComponent implements OnInit {
         Validators.required,
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$') //this is for the letters (both uppercase and lowercase) and numbers validation
       ])],
-      PhoneNo: ['', Validators.required]
+      PhoneNo: ['', Validators.required],
+      AddressLine1: ['',Validators.required],
+      AddressLine2: [''],
+      City: ['', Validators.required],
+      Province: ['', Validators.required],
+      Zip: ['', Validators.required],
     });
   }
 
@@ -107,7 +112,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
 
       this.service.editRecord(this.model).subscribe(
         data => {
-          
+          this.route.snapshot.queryParams['returnUrl'];
         },
         err => {
           console.log(err);

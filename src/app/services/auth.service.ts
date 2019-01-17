@@ -23,6 +23,7 @@ export class AuthService {
         this.loggedIn.next(true);
         localStorage.setItem('currentUser', JSON.stringify(user));
         localStorage.setItem('userId', user.CustomerID.toString());
+        this.router.navigate(['/home']);
         //window.location.reload();
       }
   }

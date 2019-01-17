@@ -10,15 +10,6 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.checkExistingUser();
-  }
-
-  checkExistingUser(){
-    if(localStorage.getItem('currentUser') != null || localStorage.getItem('currentUser') != null){
-      this.router.navigate(['/home']);
-    }else{
-      this.router.navigate(['/login'])
-    }
   }
 
 }
