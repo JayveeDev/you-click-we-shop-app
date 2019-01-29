@@ -67,6 +67,11 @@ export class NavigationComponent implements OnInit {
     this.router.navigate(['/home/cart', id]);
   }
 
+  public manageAddress(){
+    var id = localStorage.getItem('userId');
+    this.router.navigate(['/home/address', id]);
+  }
+
   logout() {
     this.loginService.Logout();
     this.checkAccount();

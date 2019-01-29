@@ -1,0 +1,7 @@
+//for images product images
+height : 520
+width : 780
+
+//for carousel
+height: 707
+width: 1600

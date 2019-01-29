@@ -13,8 +13,19 @@
             <li class="nav-item">
                 <a class="nav-link waves-light" mdbWavesEffect>Pricing</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect>Shop</a>
+            </li>
 
 
+        </ul>
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <form class="form-inline">
+                    <input class="form-control" type="text" placeholder="Search product">
+                </form>
+            </li>
         </ul>
 
         <ul class="navbar-nav">
@@ -26,16 +37,15 @@
 
                 <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
 
-                    <div  *ngIf="isAccountValid; else elseBlock">
-                        <a class="dropdown-item waves-light" (click)="manageAccount()"
-                            mdbWavesEffect>Manage Account</a>
-                        <a class="dropdown-item waves-light"mdbWavesEffect (click)="manageCart()">Cart
+                    <div *ngIf="isAccountValid; else elseBlock">
+                        <a class="dropdown-item waves-light" (click)="manageAccount()" mdbWavesEffect>Manage Account</a>
+                        <a class="dropdown-item waves-light" mdbWavesEffect (click)="manageCart()">Cart
                             ({{cartItem}})</a>
                         <div class="divider dropdown-divider"></div>
                         <a class="dropdown-item waves-light" (click)="logout()" mdbWavesEffect>Log out</a>
                     </div>
                 </div>
-                
+
                 <!--Shows if ever the user doesn't log in-->
                 <ng-template #elseBlock>
                     <a class="dropdown-item waves-light" [routerLink]='["/login"]' mdbWavesEffect>Log In</a>
@@ -46,8 +56,7 @@
 
 
 
+
+
     </links>
 </mdb-navbar>
-
-
-

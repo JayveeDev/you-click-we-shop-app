@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
 import { BillingAddressService } from '../../services/billing-address.service'
 import { CustomerModel } from '../../models/customer.model';
+import { BillingAddress } from '../../models/address.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -14,8 +15,11 @@ export class CustomerAccountDetailsComponent implements OnInit {
 
 
   private sub: any;
+  private addressEditMode: boolean;
   private id: number;
+  private addressId: number;
   private model: CustomerModel;
+  private addressModel: BillingAddress;
   private ManageAccountForm: FormGroup;
   private avatar: string;
   private base64textString: string;
@@ -23,6 +27,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private service: CustomerService,
     private billingService: BillingAddressService,
     private formBuilder: FormBuilder,
@@ -80,6 +85,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
     this.billingService.getRecord(this.id).subscribe(
       data => {
         if (data != null) {
+          this.addressId = data.AddressID;
           this.ManageAccountForm.controls["AddressLine1"].setValue(data.AddressLine1);
           this.ManageAccountForm.controls["AddressLine2"].setValue(data.AddressLine2);
           this.ManageAccountForm.controls["City"].setValue(data.City);
@@ -91,6 +97,7 @@ export class CustomerAccountDetailsComponent implements OnInit {
   }
 
   getRecord() {
+    
     this.service.getRecord(this.id).subscribe(
       data => {
         this.avatar = data.Avatar;
@@ -116,7 +123,9 @@ export class CustomerAccountDetailsComponent implements OnInit {
     if (this.ManageAccountForm.invalid) {
       console.log('invalid');
       return;
-    } else {
+    }
+    else
+    {
       this.model = ({
         CustomerID: this.id,
         FirstName: this.ManageAccountForm.controls["FirstName"].value,
@@ -127,19 +136,60 @@ export class CustomerAccountDetailsComponent implements OnInit {
         Avatar: this.avatar
       });
 
+      //checking if there is existing address for the customer
+      //if true edit else create new address
+      if(this.addressId == null || this.addressId == undefined){
+        this.addressId = 0;
+        this.addressEditMode = false;
+      }else{
+        this.addressEditMode = true;
+      }
+      
+      this.addressModel = ({
+        AddressID : this.addressId,
+        CustomerID : this.id,
+        AddressLine1 : this.ManageAccountForm.controls["AddressLine1"].value,
+        AddressLine2 : this.ManageAccountForm.controls["AddressLine2"].value,
+        City : this.ManageAccountForm.controls["City"].value,
+        Province : this.ManageAccountForm.controls["Province"].value,
+        Zip : this.ManageAccountForm.controls["Zip"].value
+      });
+      
       this.service.editRecord(this.model).subscribe(
         data => {
-
+          console.log('Record successfully edited!');
+          
         },
         err => {
           console.log(err);
         },
         () => {
-          //on completion
+          //console.log(this.addressId);
+          //console.log(this.addressEditMode);
+          if(this.addressEditMode == true){
+            this.billingService.editRecord(this.addressModel).subscribe(
+              data => {
+                console.log('Address successfully edited!');
+              },
+              err => {
+                console.log(err)
+              }
+            )
+          }
+          else if(this.addressEditMode == false){
+            this.billingService.createRecord(this.addressModel).subscribe(
+              data => {
+                console.log('Address successfully added!');
+              },
+              err => {
+                console.log(err)
+              }
+            )
+          }
+          //go back to homepage after successful editing
+          this.router.navigate(['/home'], { relativeTo: this.route });
         }
-
       );
     }
-
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CustomerService } from '../services/customer.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomerModel } from '../models/customer.model';
@@ -7,17 +7,22 @@ import { CustomerLoginModel } from '../models/login.model';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 
+
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
+
 export class SignupComponent implements OnInit {
+
+
   signupForm: FormGroup;
   model: CustomerModel;
   deliveryModel: DeliveryModel;
   loginModel: CustomerLoginModel;
-  submitted : boolean;
+  submitted: boolean;
 
   constructor(
     private service: CustomerService,
@@ -27,7 +32,6 @@ export class SignupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
     //this.getList();
     this.signupForm = this.formBuilder.group({
       FirstName: ['', Validators.compose([
@@ -56,6 +60,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
+
   //Validators
   get FirstName() { return this.signupForm.get('FirstName'); }
   get LastName() { return this.signupForm.get('LastName'); }
@@ -63,6 +68,7 @@ export class SignupComponent implements OnInit {
   get Password() { return this.signupForm.get('Password'); }
   get PhoneNo() { return this.signupForm.get('PhoneNo'); }
   get Role() { return this.signupForm.get('Role'); }
+
 
   public deleteRecord() {
     this.service.deleteRecord(2).subscribe(
@@ -92,7 +98,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.submitted = true
 
     if (this.signupForm.invalid) {
       console.log("Invalid");
@@ -129,7 +135,7 @@ export class SignupComponent implements OnInit {
           }
         );
       }
-      else if(this.signupForm.controls["Role"].value == "Delivery") {
+      else if (this.signupForm.controls["Role"].value == "Delivery") {
         //account creation for delivery man or middle man
         this.deliveryModel = ({
           UserAccountID: 0,

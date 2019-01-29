@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  get EmailAddress() { return this.loginForm.get('EmailAddress'); }
+  get Password() { return this.loginForm.get('Password'); }
 
   onSubmit() {
     //Login for customer

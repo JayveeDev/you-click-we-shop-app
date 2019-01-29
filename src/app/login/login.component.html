@@ -3,12 +3,25 @@
 
   <p class="h4 mb-4">Sign in</p>
 
-  <!-- Email -->
-  <input type="email" formControlName="EmailAddress" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+  <!-- E-mail -->
+  <div class="form-row mb-4">
+      <div class="col">
+        <input mdbValidate type="email" formControlName="EmailAddress" class="form-control" placeholder="E-mail">
+        <mdb-error *ngIf="EmailAddress.invalid && (EmailAddress.dirty || EmailAddress.touched)">Invalid email address</mdb-error>
+      </div>
+  </div>
 
   <!-- Password -->
-  <input type="password" formControlName="Password" id="defaultLoginFormPassword" class="form-control mb-3" placeholder="Password">
-  <small class="form-text text-muted float-left mb-1">
+  <div class="form-row mb-5">
+      <div class="col">
+        <input mdbValidate type="password" formControlName="Password" class="form-control" placeholder="Password">
+        <mdb-error *ngIf="Password.invalid && (Password.dirty || Password.touched)">Password should be 8 characters or longer</mdb-error>
+      </div>
+    </div>
+
+    <hr>
+  
+  <small class="form-text text-muted float-left">
     Login as:
   </small>
   <select class="browser-default custom-select form-control mb-4" formControlName="Role">

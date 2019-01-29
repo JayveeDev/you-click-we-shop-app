@@ -40,7 +40,7 @@ const appRoutes: Routes = [
         component: CustomerAccountOrderDetailsComponent
       }
     ],
-    canActivate: [AuthGuardService]
+    //canActivate: [AuthGuardService]
   },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
